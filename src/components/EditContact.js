@@ -1,21 +1,26 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 
-class AddContact extends React.Component{
-    state = {
-        name: "",
-        email: ""
+class EditContact extends React.Component{
+    constructor(props){
+        super(props)
+        const {id, name, email} = props.location.state.contact
+        this.state = {
+            id: id,
+            name: name,
+            email: email
+        }
     }
 
-    add = (e) => {
+    update = (e) => {
         e.preventDefault();
         if(this.state.name === "" || this.state.email === ""){
             alert("All fields are mandatory!")
             return
         }
 
-        this.props.addContactHandler(this.state)
-        this.setState({ name: "", email: ""})
+        this.props.updateContactHandler(this.state)
+        this.setState({ id:"", name: "", email: ""})
         this.props.history.push("/")
     }
 
@@ -23,7 +28,7 @@ class AddContact extends React.Component{
         return (
             <div className="ui main">
                 <div class="ui top attached label">ADD CONTACT</div>
-                <form className="ui form" onSubmit = {this.add}>
+                <form className="ui form" onSubmit = {this.update}>
                     <div className="field">
                         <div class="ui labeled input">
                             <div class="ui label">
@@ -50,7 +55,7 @@ class AddContact extends React.Component{
                             />
                         </div>
                     </div>
-                    <button className="fluid ui button blue">ADD</button>
+                    <button className="fluid ui button blue">Update</button>
                     <br />
                     <Link to="/">
                         <button className="fluid ui primary basic button">GO BACK</button>
@@ -61,4 +66,4 @@ class AddContact extends React.Component{
     }
 }
 
-export default AddContact
+export default EditContact
